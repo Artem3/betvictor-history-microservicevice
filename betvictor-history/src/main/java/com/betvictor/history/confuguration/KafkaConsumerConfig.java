@@ -19,6 +19,9 @@ public class KafkaConsumerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
+    @Value("${concurrent.consumers.num}")
+    private int concurrencyNum;
+
     @Value("${consumer.group}")
     private String consumerGroup;
 
@@ -42,7 +45,7 @@ public class KafkaConsumerConfig {
         ConcurrentKafkaListenerContainerFactory<String, MetricsResponseMsg> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
-
+        factory.setConcurrency(concurrencyNum);
         return factory;
     }
 }
